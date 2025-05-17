@@ -37,6 +37,12 @@ MyDrive/
     │   ├── data.yaml
     │   └── README.txt
     ├── fine_tuning_yolo.ipynb    # create a new .ipynb file to write the fine-tuning code
+├── yolov5_runs/
+    │   ├── 4cls_360img/
+    │   │   ├── weights/
+    │   │   │   ├── best.pt
+    │   │   │   └── ...
+    │   │   └── ...
 ```
 + .ipynb파일에서 fine-tuning code 실행
 ``` bash
