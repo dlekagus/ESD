@@ -32,8 +32,8 @@ MyDrive/
     │   │   │   ├── wastes01.txt
     │   │   │   ├── plastic01.txt
     │   │   │   └── ...
-    │   ├── valid/    # same structure as train/
-    │   ├── test/     # same structure as train/
+    │   ├── valid/                # same structure as train/
+    │   ├── test/                 # same structure as train/
     │   ├── data.yaml
     │   └── README.txt
     ├── fine_tuning_yolo.ipynb    # create a new .ipynb file to write the fine-tuning code
