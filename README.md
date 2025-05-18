@@ -15,10 +15,21 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 
 ## 1. System Design
+#### 1) Flow Chart
 
-## 2. Training (Fine-tuning)
-colab T4 GPU 환경에서 실행
-+ 폴더 구조
+#### 2) FSM
+<img src="https://github.com/user-attachments/assets/d93366e2-74f7-401d-8161-40dd41f76c9f" width="600"/>
+
+
+## 2. Training
+ 
+#### 1) Dataset Preparation
+
++ Download the dataset
+
+dataset은 직접 촬영 후 Roboflow에서 라벨링하여 확보했고, 해당 링크를 통해 YOLOv5 PyTorch 형식으로 다운로드 받아 아래와 같이 폴더 구성을 맞추어 바로 학습에 사용할 수 있습니다.
+
+<https://universe.roboflow.com/esd-owahw/drink-container-trash/dataset/1>
 ``` text
 MyDrive/
 └── ESD/
@@ -34,7 +45,7 @@ MyDrive/
     │   │   │   └── ...
     │   ├── valid/                # same structure as train/
     │   ├── test/                 # same structure as train/
-    │   ├── data.yaml
+    │   ├── data.yaml             # path configuration required depending on your environment
     │   └── README.txt
     ├── fine_tuning_yolo.ipynb    # create a new .ipynb file to write the fine-tuning code
 ├── yolov5_runs/
@@ -44,7 +55,21 @@ MyDrive/
     │   │   │   └── ...
     │   │   └── ...
 ```
-+ .ipynb파일에서 fine-tuning code 실행
+
++ Edit data.yaml for Path Configuration
+
+``` yaml
+train: /content/drive/MyDrive/ESD/dataset/train
+val: /content/drive/MyDrive/ESD/dataset/valid
+test: /content/drive/MyDrive/ESD/dataset/test
+
+nc: 4
+names: ['can', 'plastic', 're', 'wastes']
+```
+#### 2) Fine-Tuning on Colab
+
+해당 모델은 Google Colab T4 GPU 환경에서 YOLOv5n을 사용하여 fine-tuning 하였습니다.
+
 ``` bash
 # Install YOLOv5n
 !git clone https://github.com/ultralytics/yolov5
