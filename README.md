@@ -19,7 +19,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 본 시스템은 Fine-Tuned YOLOv5n 분류 모델과 Raspberry Pi 기반 하드웨어 제어 로직을 통합하여, 
 자동 분리수거 기능을 수행하는 임베디드 시스템입니다. 
 
-<img src="https://github.com/user-attachments/assets/9bfdb22b-08e6-4147-b669-6c0038893bd4" width="250"/>
+<img src="https://github.com/user-attachments/assets/8bd61d4f-0efa-45ba-b5c2-c0ba032b8f12" width="250"/>
 
 ## 2. Model Training
  
@@ -104,7 +104,7 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_360img/weights/best.pt')
 
 본 임베디드 시스템은 FSM(Finite State Machine)을 기반으로 각 기능을 단계적으로 제어합니다. 
 
-: 쓰레기를 카메라로 인식 -> 종류에 따라 적절한 분리수거통 위치로 이동 -> 분리수거통이 가득 찼는지 확인 후 LED로 상태 표시
+: YOLOv5n으로 추론 및 분류 -> 분리수거통 및 받침대 회전 -> 초음파 센서로 FULL 여부 확인 -> LED 알림
 
 #### 🗂️ 파일 구성
 
@@ -125,7 +125,7 @@ yolov5/
 
 🗂️ FSM의 전체 state 제어는 *main.py*에서 수행합니다. 
 
-<img src="https://github.com/user-attachments/assets/d93366e2-74f7-401d-8161-40dd41f76c9f" width="600"/>
+<img src="https://github.com/user-attachments/assets/fd683044-f16a-4f80-a3fb-8b0d09381a22" width="600"/>
 
 #### 2) Classification Logic
 
