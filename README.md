@@ -10,9 +10,15 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 + Raspberry Pi with 서보모터, 초음파센서, LED
 
 ## Commit History
-[25/04/27] repository 생성  
+[25/04/27] repository 생성
+
 [25/05/18] README에 학습(fine-tuning) 코드 추가
 
+[25/05/18] Embedded Control Logic > Hardware Control Logic > Ultrasonic and LED 파일 업로드
+
+[25/05/18] Embedded Control Logic > Hardware Control Logic > Servo 파일 업로드 (진행 중)
+
+[25/05/18] Embedded Control Logic > Classification Logic 파일 업로드 (진행 중)
 
 ## 1. System Architecture
 
@@ -123,7 +129,7 @@ yolov5/
 
 #### 1) FSM
 
-🗂️ FSM의 전체 state 제어는 *main.py*에서 수행합니다. 
+🗂️ FSM의 전체 state 제어는 *detect.py*와 *control.py*에서 함수를 호출하여 *main.py*에서 수행합니다.
 
 <img src="https://github.com/user-attachments/assets/fd683044-f16a-4f80-a3fb-8b0d09381a22" width="600"/>
 
@@ -131,11 +137,22 @@ yolov5/
 
 🗂️ 추론과 동시에 분류가 이루어지도록, 해당 함수를 *detect.py*에 추가합니다. 
 
++ ultralytics yolov5n의 *detect.py* 내 run() 함수 수정하여 작성
+
++ 분류 클래스: can, plastic, re(demo용 구조물에서는 To be Sorted로 표기), wastes
 
 
 #### 3) Hardware Control Logic
 
 🗂️ 서보모터, 초음파센서, 그리고 LED 센서 제어는 *control.py*에서 수행합니다. 
+
++ Servo
+
+PCA9685 기반으로 SG-90 모델 2개와 MG996R 모델 1개에 대한 회전 제어
+
++ Ultrasonic and LED
+
+GPIO 기반으로 demo용으로서 wastes 클래스에 대해서만 동작 확인
 
 
 ## 5. Evaluation
