@@ -14,25 +14,25 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 [25/05/18] README에 학습(fine-tuning) 코드 추가
 
 
-## 1. System Design
-#### 1) Flow Chart
+## 1. System Architecture
 
-#### 2) FSM
-<img src="https://github.com/user-attachments/assets/d93366e2-74f7-401d-8161-40dd41f76c9f" width="600"/>
+본 시스템은 Fine-Tuned YOLOv5n 분류 모델과 Raspberry Pi 기반 하드웨어 제어 로직을 통합하여, 
+자동 분리수거 기능을 수행하는 임베디드 시스템입니다. 
 
+<img src="https://github.com/user-attachments/assets/9bfdb22b-08e6-4147-b669-6c0038893bd4" width="250"/>
 
-## 2. Training
+## 2. Model Training
  
 #### 1) Dataset Preparation
 
-+ Download the dataset
-
 dataset은 직접 촬영 후 Roboflow에서 라벨링하여 확보했고, 해당 링크를 통해 YOLOv5 PyTorch 형식으로 다운로드 받아 아래와 같이 폴더 구성을 맞추어 바로 학습에 사용할 수 있습니다.
+
++ Download the dataset
 
 <https://universe.roboflow.com/esd-owahw/drink-container-trash/dataset/1>
 ``` text
 MyDrive/
-└── ESD/
+├── ESD/
     ├── dataset/
     │   ├── train/
     │   │   ├── images/
@@ -54,9 +54,10 @@ MyDrive/
     │   │   │   ├── best.pt
     │   │   │   └── ...
     │   │   └── ...
+└── ...
 ```
 
-+ Edit data.yaml for Path Configuration
++ Edit *data.yaml* for Path Configuration
 
 ``` yaml
 train: /content/drive/MyDrive/ESD/dataset/train
@@ -68,7 +69,7 @@ names: ['can', 'plastic', 're', 'wastes']
 ```
 #### 2) Fine-Tuning on Colab
 
-해당 모델은 Google Colab T4 GPU 환경에서 YOLOv5n을 사용하여 fine-tuning 하였습니다.
+본 모델은 Google Colab T4 GPU 환경에서 YOLOv5n을 사용하여 fine-tuning 하였습니다.
 
 ``` bash
 # Install YOLOv5n
@@ -95,10 +96,48 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_360img/weights/best.pt')
 ```
 
 ## 3. Inference
+(경량화 및 라즈베리파이 환경 적용 과정)
 
-## 4. How To Run
+(best.pt 추론 방식 및 detect.py 실행 예시)
+
+## 4. Embedded Control Logic
+
+본 임베디드 시스템은 FSM(Finite State Machine)을 기반으로 각 기능을 단계적으로 제어합니다. 
+
+: 쓰레기를 카메라로 인식 -> 종류에 따라 적절한 분리수거통 위치로 이동 -> 분리수거통이 가득 찼는지 확인 후 LED로 상태 표시
+
+#### 🗂️ 파일 구성
+
++ *detect.py* : 분류 함수 추가
++ *control.py* : 하드웨어 제어 
++ *main.py* : FSM 흐름 제어 
+
+``` text
+yolov5/
+├── best.pt
+├── detect.py
+├── control.py
+├── main.py
+└── ...
+```
+
+#### 1) FSM
+
+🗂️ FSM의 전체 state 제어는 *main.py*에서 수행합니다. 
+
+<img src="https://github.com/user-attachments/assets/d93366e2-74f7-401d-8161-40dd41f76c9f" width="600"/>
+
+#### 2) Classification Logic
+
+🗂️ 추론과 동시에 분류가 이루어지도록, 해당 함수를 *detect.py*에 추가합니다. 
+
+
+
+#### 3) Hardware Control Logic
+
+🗂️ 서보모터, 초음파센서, 그리고 LED 센서 제어는 *control.py*에서 수행합니다. 
+
 
 ## 5. Evaluation
 
-## 6. 
 
