@@ -28,7 +28,7 @@ Usage - formats:
                                  yolov5s_edgetpu.tflite     # TensorFlow Edge TPU
                                  yolov5s_paddle_model       # PaddlePaddle
 """
-# 추가가
+# 추가 
 import pathlib
 pathlib.PosixPath = pathlib.WindowsPath
 import time
@@ -192,8 +192,12 @@ def run(
     
     frame_count = 0
     start_time = time.time()
-    
+
+    # 추가: try-finally 구조 
     try:
+        # 추가: 감지된 클래스 저장용 리스트
+        detected_class = [] 
+
         seen, windows, dt = 0, [], (Profile(device=device), Profile(device=device), Profile(device=device))
         for path, im, im0s, vid_cap, s in dataset:
             frame_count += 1
@@ -269,6 +273,11 @@ def run(
                     for *xyxy, conf, cls in reversed(det):
                         c = int(cls)  # integer class
                         label = names[c] if hide_conf else f"{names[c]}"
+
+                        # 추가: 클래스 기록
+                        if return_res:
+                            detected_class.append(label)
+
                         confidence = float(conf)
                         confidence_str = f"{confidence:.2f}"
 
@@ -321,6 +330,28 @@ def run(
                             save_path = str(Path(save_path).with_suffix(".mp4"))  # force *.mp4 suffix on results videos
                             vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
                         vid_writer[i].write(im0)
+
+            # 추가: 분류 결과 반환
+            if return_res:
+                if not detected_class:
+                    return None
+                
+                class_cnt = {}
+                for a in detected_class:
+                    if a in class_cnt:
+                        class_cnt[a] += 1
+                    else:
+                        class_cnt[a] = 1
+                           
+                class_name = list(class_cnt.keys())
+
+                if 're' in class_name:
+                    return 're'
+                
+                if len(class_name) == 1:
+                    return class_name[0]
+                
+                return 're'
 
             # Print time (inference-only)
             LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1e3:.1f}ms")
