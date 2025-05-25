@@ -14,11 +14,9 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/05/18] README에 학습(fine-tuning) 코드 추가
 
-[25/05/18] Embedded Control Logic > Hardware Control Logic > Ultrasonic and LED 파일 업로드
+[25/05/18] Embedded Control Logic 초안 업로드
 
-[25/05/18] Embedded Control Logic > Hardware Control Logic > Servo 파일 업로드 (진행 중)
-
-[25/05/18] Embedded Control Logic > Classification Logic 파일 업로드 (진행 중)
+[25/05/25] Embedded Control Logic 테스트 버전 업로드
 
 ## 1. System Architecture
 
