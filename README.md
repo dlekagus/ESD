@@ -148,7 +148,7 @@ yolov5/
 
 + Servo
 
-PCA9685 기반으로 SG-90 모델 １개와 MG996R 모델 ２개에 대한 회전 제어
+PCA9685 기반으로 SG-90 모델 ２개와 MG996R 모델 １개에 대한 회전 제어
 
 + Ultrasonic and LED
 
