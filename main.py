@@ -1,5 +1,7 @@
 from detect import run
 from control import (
+    rotate_bin,
+    rotate_tray,
     check_full,
     notification,
     cleanup,
@@ -7,12 +9,13 @@ from control import (
 import cv2
 import time
 
-# Define parameter
+# Define states
 STATE_IDLE = "IDLE"
 STATE_CLASS = "CLASS"
 STATE_SERVO = "SERVO"
 STATE_FULL = "FULL"
 STATE_LED = "LED"
+
 FULL_THRES = 4
 INFERENCE_INTERVAL = 3
 
@@ -38,6 +41,7 @@ try:
         if state == STATE_IDLE:
             if frame_cnt % INFERENCE_INTERVAL == 0:
                 state = STATE_CLASS
+
         elif state == STATE_CLASS:
             label, conf, frame = run(
                 weights = "best.pt",
@@ -47,7 +51,10 @@ try:
             )
             last_res = (label, conf, frame)
 
-            if label != "unknown":
+            if not label or label == "unknown":
+                print("[CLASS] 감지 실패")
+                state = STATE_IDLE
+            else: 
                 if label in full:
                     print(f"[FULL] {label} 통이 이미 가득 찼습니다.")
                     state = STATE_LED
@@ -56,11 +63,17 @@ try:
                     drop[label] += 1
                     detected_label = label
                     state = STATE_SERVO
+
+        elif state == STATE_SERVO:
+            rotate_bin(detected_label)
+            rotate_tray()
+
+            if drop[detected_label] >= FULL_THRES:
+                state = STATE_FULL
             else:
                 state = STATE_IDLE
-        elif state == STATE_SERVO:
 
-        # demo: Check FULL only for wastes class due to one ultrasonic sensor and one LED
+        # demo: Check FULL only for 'wastes' class due to one ultrasonic sensor and one LED
         elif state == STATE_FULL:
             if detected_label == "wastes" and check_full():
                 full.add(detected_label)
@@ -68,11 +81,16 @@ try:
             else:
                 drop[detected_label] = 0
                 state = STATE_IDLE
+
         elif state == STATE_LED:
             notification()
             state = STATE_IDLE
+            
 except KeyboardInterrupt:
     pass
 finally:
     cv2.destroyAllWindows()
     cleanup()
+
+
+
