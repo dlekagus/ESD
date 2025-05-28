@@ -40,12 +40,7 @@ try:
         # Control FSM
         if state == STATE_IDLE:
             if frame_cnt % INFERENCE_INTERVAL == 0:
-                if label in full:
-                    print(f"[IDLE] {label} 통이 이미 가득 찼습니다. 추론 생략")
-                    detected_label = label
-                    state = STATE_LED
-                else: 
-                    state = STATE_CLASS
+                state = STATE_CLASS
 
         elif state == STATE_CLASS:
             label, conf, frame = run(
