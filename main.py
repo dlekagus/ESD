@@ -31,7 +31,7 @@ try:
     while True:
         frame_cnt += 1
         # demo: Real-time streaming just for checking(not required for actual commercialization) 
-        _, _, frame = last_res
+        label, _, frame = last_res
         if frame is not None:
             cv2.imshow("Webcam", frame)
             if cv2.waitKey(1) == ord("q"):
@@ -40,7 +40,12 @@ try:
         # Control FSM
         if state == STATE_IDLE:
             if frame_cnt % INFERENCE_INTERVAL == 0:
-                state = STATE_CLASS
+                if label in full:
+                    print(f"[IDLE] {label} 통이 이미 가득 찼습니다. 추론 생략")
+                    detected_label = label
+                    state = STATE_LED
+                else: 
+                    state = STATE_CLASS
 
         elif state == STATE_CLASS:
             label, conf, frame = run(
