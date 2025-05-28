@@ -23,7 +23,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 본 시스템은 Fine-Tuned YOLOv5n 분류 모델과 Raspberry Pi 기반 하드웨어 제어 로직을 통합하여, 
 자동 분리수거 기능을 수행하는 임베디드 시스템입니다. 
 
-<img src="https://github.com/user-attachments/assets/2026f1c5-9ad3-44d4-b3e3-f24ab587ba3e" width="250"/>
+<img src="https://github.com/user-attachments/assets/0821dbdc-e17e-4df1-b87a-50daf8506f4d" width="250"/>
 
 ## 2. Model Training
  
