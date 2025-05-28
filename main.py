@@ -31,7 +31,7 @@ try:
     while True:
         frame_cnt += 1
         # demo: Real-time streaming just for checking(not required for actual commercialization) 
-        label, _, frame = last_res
+        _, _, frame = last_res
         if frame is not None:
             cv2.imshow("Webcam", frame)
             if cv2.waitKey(1) == ord("q"):
