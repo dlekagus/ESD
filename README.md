@@ -129,7 +129,7 @@ yolov5/
 
 🗂️ FSM의 전체 state 제어는 *detect.py*와 *control.py*에서 함수를 호출하여 *main.py*에서 수행합니다.
 
-<img src="https://github.com/user-attachments/assets/fd683044-f16a-4f80-a3fb-8b0d09381a22" width="600"/>
+<img src="https://github.com/user-attachments/assets/efe817af-9745-46e4-bbd6-97fe4f73508d" width="600"/>
 
 #### 2) Classification Logic
 
