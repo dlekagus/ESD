@@ -33,7 +33,7 @@ dataset은 직접 촬영 후 Roboflow에서 라벨링하여 확보했고, 해당
 
 + Download the dataset
 
-<https://universe.roboflow.com/esd-owahw/drink-container-trash/dataset/1>
+<https://app.roboflow.com/esd-owahw/drink-container-waste/1>
 ``` text
 MyDrive/
 ├── ESD/
