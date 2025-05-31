@@ -40,11 +40,11 @@ MyDrive/
     ├── dataset/
     │   ├── train/
     │   │   ├── images/
-    │   │   │   ├── wastes01.jpg
+    │   │   │   ├── can01.jpg
     │   │   │   ├── plastic01.jpg
     │   │   │   └── ...
     │   │   ├── labels/
-    │   │   │   ├── wastes01.txt
+    │   │   │   ├── can01.txt
     │   │   │   ├── plastic01.txt
     │   │   │   └── ...
     │   ├── valid/                # same structure as train/
@@ -53,7 +53,7 @@ MyDrive/
     │   └── README.txt
     ├── fine_tuning_yolo.ipynb    # create a new .ipynb file to write the fine-tuning code
 ├── yolov5_runs/
-    │   ├── 4cls_360img/
+    │   ├── 4cls_328img/
     │   │   ├── weights/
     │   │   │   ├── best.pt
     │   │   │   └── ...
@@ -69,7 +69,7 @@ val: /content/drive/MyDrive/ESD/dataset/valid
 test: /content/drive/MyDrive/ESD/dataset/test
 
 nc: 4
-names: ['can', 'plastic', 're', 'wastes']
+names: ['can', 'paper', 'plastic', 're']
 ```
 #### 2) Fine-Tuning on Colab
 
@@ -89,14 +89,14 @@ names: ['can', 'plastic', 're', 'wastes']
   --epochs 50 \
   --data /content/drive/MyDrive/ESD/dataset/data.yaml \
   --weights yolov5n.pt \
-  --name 4cls_360img \
+  --name 4cls_328img \
   --project /content/drive/MyDrive/yolov5_runs \
   --cache
 ```
 ``` python
 # Download best.pt for inference
 from google.colab import files
-files.download('/content/drive/MyDrive/yolov5_runs/4cls_360img/weights/best.pt')
+files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 ```
 
 ## 3. Inference
