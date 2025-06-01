@@ -50,7 +50,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/01] Embedded Control Logic 수정본 업로드: 재분류 조건(detect.py), 클래스 조정(main.py)
 
-[25/06/02] README 내용 추가: Content, Key Features, Technologies Used, Tasks & Responsibilities, How To Run
+[25/06/02] README 내용 추가: Content, Key Features, Technologies Used, Tasks & Responsibilities, How To Run, Evaluation
 
 ## Key Features
 
@@ -252,7 +252,7 @@ yolov5/
 
 + ultralytics yolov5n의 *detect.py* 내 run() 함수 수정하여 작성
 
-+ 분류 클래스: can, plastic, re(demo용 구조물에서는 To be Sorted로 표기), wastes
++ 분류 클래스: can, plastic, re(demo용 구조물에서는 To be Sorted로 표기), paper
 
 
 #### 3) Hardware Control Logic
@@ -270,4 +270,24 @@ GPIO 기반으로 demo용으로서 wastes 클래스에 대해서만 동작 확�
 
 ## 4. Evaluation
 
+본 프로젝트의 성능 평가는 다음과 같은 정량적, 정성적 지표를 기준으로 진행되었습니다. 
+
+| 항목                          | 설명                                          |
+| --------------------------- | ------------------------------------------- |
+|FPS| Raspberry Pi에서 실시간 추론 속도 측정 (10 이상된 거 캡처본) |
+| Precision / Recall      | YOLOv5n 분류 정확도 평가 (계산 값, curve, accuracy)          |
+| Confusion Matrix      | 클래스 간 오분류 양상 (시각화)                            |
+|System Stability        | 실사용 편의성, 낙하 안정성 |
+
+💡 Encountered Difficulties & Solutions
+
+(개선 후 사진과 함께 solution 추가)
+
++ 모델 인식 오류
+
++ 서보모터 전력 부족
+
++ 서보모터 하중 한계
+
++ 실구조물 구조적 문제
 
