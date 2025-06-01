@@ -12,7 +12,19 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Content
 
++ [Deployment](#deployment)
++ [Commit History](#commit-history)
++ [Key Features](#key-features)
++ [Technologies Used](#technologies-used)
++ [Tasks & Responsibilities](#tasks--responsibilities)
++ [How To Run](#1-how-to-run)
++ [Model Training](#2-model-training)
++ [Embedded Control Logic](#3-embedded-control-logic)
++ [Evaluation](#4-evaluation)
+
 ## Deployment
+
+(배포 링크 첨부, 파일 tree 추가)
 
 ## Commit History
 
@@ -22,13 +34,13 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/05/14] fine-tuning 및 모델 정확도 보완 시도
 
-[25/05/14] Raspberry Pi에서 서보모터 3개 동작 확인 및 문제점 해결
+[25/05/14] Raspberry Pi에서 서보모터 3개 동작 확인 및 전력 문제 해결
 
-[25/05/18] YOLOv5n fine-tuning 및 README에 코드 추가
+[25/05/18] README 내용 추가: Model Training, Flow Chart
 
-[25/05/18] Embedded Control Logic 초안 업로드
+[25/05/18] Embedded Control Logic 초안 업로드 및 README 내용 추가
 
-[25/05/25] Embedded Control Logic 테스트 버전 업로드
+[25/05/25] Embedded Control Logic 테스트 버전 업로드 및 README 내용 추가
 
 [25/05/28] 서보모터 구조물 하중 확인 및 보완
 
@@ -36,9 +48,9 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/05/31] fine-tuning 재진행으로 인한 README 코드 및 dataset 링크 수정
 
-[25/06/01] Embedded Control Logic 수정: 재분류 조건(detect.py), 클래스 조정(main.py)
+[25/06/01] Embedded Control Logic 수정본 업로드: 재분류 조건(detect.py), 클래스 조정(main.py)
 
-[25/06/01] system architecture 수정
+[25/06/02] README 내용 추가: Content, Key Features, Technologies Used, Tasks & Responsibilities, How To Run
 
 ## Key Features
 
@@ -60,6 +72,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 ![YOLOv5n](https://img.shields.io/badge/YOLOv5n-00FFFF?style=for-the-badge&logo=github&logoColor=black)
 
 ![Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)
+![Conda](https://img.shields.io/badge/Conda-44A833?style=for-the-badge&logo=anaconda&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
@@ -68,7 +81,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 | 카메라 | 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | 전원공급 장치 |
 |:------:|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
-| <img src"" width="150"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="150"/> 
+| <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="150"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="150"/> 
+| 쓰레기 실시간 인식 | 중앙 회전축 기준 받침대 위치 변경 (양날개) | 두 받침대 외회전 (단날개) | 분리통 꽉참 여부 확인 | 분리통 꽉참 상태 경고 표시 | 서보모터 3개 구동 | 외부 전원 공급용 |
 
 ## Tasks & Responsibilities
 
@@ -88,23 +102,50 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 #### 1) Setup
 
-🔌 Wiring Diagram 
+실구조물은 2층 회전 구조로, 2층의 두 받침대는 SG-90 서보모터 2개와 각각 붙어 있고 이 두 서보모터는 MG996R 서보모터의 양 날개에 각각 부착되어 있습니다. 층층이 연결된 이 구조는 1층 분리통의 정중앙과 얇은 봉을 통해 연결되며 분류 결과에 따라 서보모터가 회전하며 낙하를 통해 쓰레기가 처리됩니다.  
+
+📐 Wiring Diagram & Physical Structure
+
+부품 배치는 다음과 같습니다:
 
 (연결 회로도 사진)
 
-📐 Physical Structure
+<img src="https://github.com/user-attachments/assets/fde17e5d-96df-4e12-b131-bf441ab5554c" width="350"/>
 
-<img src=
+🔌 5V Power Supply
 
-+ 
+Raspberry Pi에서 2개 이상의 서보모터를 동시 구동할 경우 shutdown이 발생하기에 5V 외부 전원 공급이 반드시 필요합니다. 
+
+(연결 사진)
+
++ PCA9685 V+ 단자에 5V 어댑터 연결
++ GND는 Raspberry Pi와 공통으로 연결
 
 #### 2) Requirements
 
+📥 Download [Deployment](#deployment) Packages and Unzip it 
+
 #### 3) Run Command
 
-#### 4) Know Issues
+⌨ Run the following commands in Command Prompt:
+
+```bash
+source ESD/bin/activate           # change 'ESD' into your own conda virtual environment name
+pip install -r requirements.txt
+python main.py
+```
+
+#### ⚠️ Know Issues
+
+| 이슈                        | 원인 및 해결 방안                                     |
+| ------------------------- | ---------------------------------------------- |
+| 서보모터가 멈추거나 라즈베리파이가 꺼짐 | PCA9685에 5V 안정 전원 공급 필수|
+| 카메라 인식 안 됨             | 안정적인 작동을 위해 PiCamera 대신 USB 웹캠 사용 권장 |
+| 초음파 센서/LED 미작동       | GND 공통 연결 여부 확인, GPIO 핀 번호 확인|
 
 ## 2. Model Training
+
+새로운 분류 모델을 원할 경우, 아래의 절차를 따라 다시 fine-tuning하면 됩니다. 
  
 #### 1) Dataset Preparation
 
