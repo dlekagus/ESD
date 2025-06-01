@@ -7,16 +7,30 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Technologies Used
 + YOLOv5n (fine-tuned)
-+ Raspberry Pi with 서보모터, 초음파센서, LED
++ Raspberry Pi with 서보모터(PCA9685), 초음파센서/LED(GPIO)
 
 ## Commit History
 [25/04/27] repository 생성
 
-[25/05/18] README에 학습(fine-tuning) 코드 추가
+[25/05/14] fine-tuning 및 모델 정확도 보완 시도
+
+[25/05/14] Raspberry Pi에서 서보모터 3개 동작 확인 및 문제점 해결
+
+[25/05/18] YOLOv5n fine-tuning 및 README에 코드 추가
 
 [25/05/18] Embedded Control Logic 초안 업로드
 
 [25/05/25] Embedded Control Logic 테스트 버전 업로드
+
+[25/05/28] 서보모터 구조물 하중 확인 및 보완
+
+[25/05/30] 모델 정확도 보완을 위해 클래스 재조정 및 dataset 재구성
+
+[25/05/31] fine-tuning 재진행으로 인한 README 코드 및 dataset 링크 수정
+
+[25/06/01] Embedded Control Logic 수정: 재분류 조건(detect.py), 클래스 조정(main.py)
+
+[25/06/01] system architecture 수정
 
 ## 1. System Architecture
 
