@@ -23,7 +23,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Deployment
 
-(배포 링크 첨부, 파일 tree 추가)
+(배포 링크 첨부 or 별도 폴더 추가, 파일 tree 추가)
 
 ## Commit History
 
