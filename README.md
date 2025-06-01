@@ -62,9 +62,9 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ** Hardware Stack**
 
-| 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | GPIO HAT |
-|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:--------:|
-| <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="60"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> |
+| 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | 전원공급 장치 |
+|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
+| <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> 
 
 
 
