@@ -16,6 +16,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Commit History
 
+🕰 2025.04.16 ~ 2025.06.11
+
 [25/04/27] repository 생성
 
 [25/05/14] fine-tuning 및 모델 정확도 보완 시도
@@ -40,15 +42,17 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Key Features
 
-+ fine-tuned YOLOv5n 기반 실시간 분류
-+ Raspberry Pi with 서보모터(PCA9685), 초음파센서/LED(GPIO)
++ fine-tuned YOLOv5n 기반 실시간 쓰레기 분류
++ PCA9685 기반 서보모터 3개 제어
++ GPIO 기반 초음파센서 및 LED 제어
++ FSM을 통해 Raspberry Pi에서의 전체 동작 흐름 관리
 
 ## Technologies Used 
-** Platform **
+💻 Platform
 
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?style=for-the-badge&logo=raspberrypi&logoColor=white)
 
-** Software Stack**
+🧠 Software Stack
 
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
@@ -60,20 +64,45 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
-** Hardware Stack**
+🔩 Hardware Stack
 
-| 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | 전원공급 장치 |
-|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
-| <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> 
+| 카메라 | 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | 전원공급 장치 |
+|:------:|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
+| <img src"" width="150"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="150"/> 
 
+## Tasks & Responsibilities
 
+(개인 캐릭터 그림 추가)
 
-## 1. System Architecture
+| Member   | Tasks                                                                                                                  |
+|----------|-------------------------------------------------------------------------------------------------------------------------|
+| 이담현   | - YOLOv5n 모델 fine-tuning<br>- 라즈베리파이 추론 테스트 및 FPS 개선<br>- 모델 오류 수정<br>- Embedded Control Logic 작성 및 테스트 |
+| 최현빈   | - 준비물 구성 및 확보<br>- 서보모터 하중 테스트 및 위치 보완<br>- 하드웨어 배치 최적화<br>- 자료 제작|
+| 공동     | - 데이터셋 구성<br>- 구조물 제작 및 보완<br>- PCA9685 전력 안정화 구성<br>- 전체 동작 통합 테스트 및 최적화|
 
-본 시스템은 Fine-Tuned YOLOv5n 분류 모델과 Raspberry Pi 기반 하드웨어 제어 로직을 통합하여, 
-자동 분리수거 기능을 수행하는 임베디드 시스템입니다. 
+## 1. How To Run
+
+🔄 Flow Chart
 
 <img src="https://github.com/user-attachments/assets/0821dbdc-e17e-4df1-b87a-50daf8506f4d" width="250"/>
+
+#### 1) Setup
+
+🔌 Wiring Diagram 
+
+(연결 회로도 사진)
+
+📐 Physical Structure
+
+<img src=
+
++ 
+
+#### 2) Requirements
+
+#### 3) Run Command
+
+#### 4) Know Issues
 
 ## 2. Model Training
  
@@ -149,12 +178,7 @@ from google.colab import files
 files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 ```
 
-## 3. Inference
-(경량화 및 라즈베리파이 환경 적용 과정)
-
-(best.pt 추론 방식 및 detect.py 실행 예시)
-
-## 4. Embedded Control Logic
+## 3. Embedded Control Logic
 
 본 임베디드 시스템은 FSM(Finite State Machine)을 기반으로 각 기능을 단계적으로 제어합니다. 
 
@@ -203,6 +227,6 @@ PCA9685 기반으로 SG-90 모델 ２개와 MG996R 모델 １개에 대한 회�
 GPIO 기반으로 demo용으로서 wastes 클래스에 대해서만 동작 확인
 
 
-## 5. Evaluation
+## 4. Evaluation
 
 
