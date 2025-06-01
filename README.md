@@ -1,15 +1,21 @@
-# 음료 용기 분리수거 쓰레기통 
+<div align="center">
+ 
+#  🥤음료 용기 분리수거 쓰레기통 🚮
 (demo 이미지 or gif 첨부)
 
 대학교 캠퍼스 내 음료 용기 분리수거 환경 개선을 목표로,
-Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하고,
-여러 센서와 액추에이터를 장착한 실구조물을 제어하여 자동 분리수거를 수행하는 시스템
 
-## Technologies Used
-+ YOLOv5n (fine-tuned)
-+ Raspberry Pi with 서보모터(PCA9685), 초음파센서/LED(GPIO)
+Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하고,
+
+여러 센서와 액추에이터를 장착한 실구조물을 제어하여 자동 분리수거를 수행하는 시스템
+</div>
+
+## Content
+
+## Deployment
 
 ## Commit History
+
 [25/04/27] repository 생성
 
 [25/05/14] fine-tuning 및 모델 정확도 보완 시도
@@ -31,6 +37,36 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 [25/06/01] Embedded Control Logic 수정: 재분류 조건(detect.py), 클래스 조정(main.py)
 
 [25/06/01] system architecture 수정
+
+## Key Features
+
++ fine-tuned YOLOv5n 기반 실시간 분류
++ Raspberry Pi with 서보모터(PCA9685), 초음파센서/LED(GPIO)
+
+## Technologies Used 
+** Platform **
+
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?style=for-the-badge&logo=raspberrypi&logoColor=white)
+
+** Software Stack**
+
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
+![YOLOv5n](https://img.shields.io/badge/YOLOv5n-00FFFF?style=for-the-badge&logo=github&logoColor=black)
+
+![Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+
+** Hardware Stack**
+
+| 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | GPIO HAT |
+|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:--------:|
+| <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="60"/> | <img src="your_image_link_here" width="100"/> | <img src="your_image_link_here" width="100"/> |
+
+
 
 ## 1. System Architecture
 
