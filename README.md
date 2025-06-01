@@ -50,7 +50,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/02] README 내용 추가: Content, Key Features, Technologies Used, Tasks & Responsibilities, How To Run, Evaluation
 
-[25/06/02] model, logic 폴더 생성 및 해당 내용 각각에 이동: Model Training, Embedded Control Logic(main.py, detect.py, control.py)
+[25/06/02] logic 폴더 생성 및 해당 파일 및 README 내용 이동: Embedded Control Logic(main.py, detect.py, control.py)
 
 ## Key Features
 
