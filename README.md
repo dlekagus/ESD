@@ -215,6 +215,11 @@ names: ['can', 'paper', 'plastic', 're']
   --project /content/drive/MyDrive/yolov5_runs \
   --cache
 ```
+
+🔍 fine-tuning result
+
+<img src="https://github.com/user-attachments/assets/a7bbf72b-877e-4a4c-9c4e-5e418433b563" width="600"/>
+
 ``` python
 # Download best.pt for inference
 from google.colab import files
