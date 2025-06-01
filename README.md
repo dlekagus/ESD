@@ -19,7 +19,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 + [Tasks & Responsibilities](#tasks--responsibilities)
 + [How To Run](#1-how-to-run)
 + [Model Training](#2-model-training)
-+ [Evaluation](#3-evaluation)
++ [Embedded Control Logic](#3-embedded-control-logic)
++ [Evaluation](#4-evaluation)
 
 ## Deployment
 
@@ -220,7 +221,11 @@ from google.colab import files
 files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 ```
 
-## 3. Evaluation
+## 3. Embedded Control Logic
+
+자세한 내용은 *logic* 폴더에서 확인할 수 있습니다. 
+
+## 4. Evaluation
 
 본 프로젝트의 성능 평가는 다음과 같은 정량적, 정성적 지표를 기준으로 진행되었습니다. 
 
