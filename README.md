@@ -54,6 +54,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/02] logic 폴더 생성 및 해당 파일 및 README 내용 이동: Embedded Control Logic(main.py, detect.py, control.py)
 
+[25/06/02] control.py 코드 수정: GPIO pin 번호 변경
+
 ## Key Features
 
 + fine-tuned YOLOv5n 기반 실시간 쓰레기 분류
