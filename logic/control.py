@@ -16,7 +16,7 @@ pca = PCA9685(i2c)
 pca.frequency = PCA_FREQ
 
 current = "re"
-bin_pos = {"re":0, "can":1, "plastic":2, "wastes":3}
+bin_pos = {"re":0, "can":1, "plastic":2, "paper":3}
 
 # angle -> duty cycle 
 def angle_to_duty(angle):
@@ -35,7 +35,7 @@ def rotate_bin(target):
     current_idx = bin_pos[current]
     target_idx = bin_pos[target]
 
-    if target != "wastes":
+    if target != "paper":
         target_angle = target_idx * 90
     else:
         target_angle = -90
@@ -61,8 +61,8 @@ def rotate_tray():
 
 
 # GPIO: Control Ultrasonic and LED
-ULTRA_TRIG = 3
-ULTRA_ECHO = 2
+ULTRA_TRIG = 17
+ULTRA_ECHO = 27
 LED = 4
 
 GPIO.setmode(GPIO.BCM)
@@ -97,3 +97,4 @@ def notification():
 def cleanup():
     print("[CLEANUP] GPIO 정리 및 종료")
     GPIO.cleanup()
+
