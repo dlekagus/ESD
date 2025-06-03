@@ -56,6 +56,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/02] control.py 코드 수정: GPIO pin 번호 변경
 
+[25/06/03] 구조물 제작 완료 및 시스템 통합 진행
+
 ## Key Features
 
 + fine-tuned YOLOv5n 기반 실시간 쓰레기 분류
@@ -83,14 +85,14 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 🔩 Hardware Stack
 
-| 카메라 | 서보모터 (MG996R) | 서보모터 (SG-90) | 초음파센서 | LED | PCA9685 Driver | 전원공급 장치 |
+| 카메라 | 서보모터<br>(MG996R) | 서보모터<br>(SG-90) | 초음파센서<br>(HC-SR04) | LED | PCA9685 Driver | 전원공급 장치 |
 |:------:|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
-| <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="150"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="150"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="150"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="150"/> | <img src="" width="150"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="150"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="150"/> 
-| 쓰레기 실시간 인식 | 중앙 회전축 기준 받침대 위치 변경 (양날개) | 두 받침대 외회전 (단날개) | 분리통 꽉참 여부 확인 | 분리통 꽉참 상태 경고 표시 | 서보모터 3개 구동 | 외부 전원 공급용 |
+| <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="200"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="200"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="200"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="200"/> | <img src="https://github.com/user-attachments/assets/c1274c5f-55c1-423f-a773-0f0524bffcc0" width="200"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="200"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="200"/> 
+| 쓰레기<br>실시간 인식 | 중앙 회전축 기준<br>받침대 위치 변경 (양날개) | 두 받침대<br>외회전 (단날개) | 분리통 꽉참<br>여부 확인 | 분리통 꽉참 상태 경고 표시 | 서보모터 3개 구동 | 외부 전원 공급 |
 
 ## Tasks & Responsibilities
 
-(개인 캐릭터 그림 추가)
+(개인 그림 추가)
 
 | Member   | Tasks                                                                                                                  |
 |----------|-------------------------------------------------------------------------------------------------------------------------|
@@ -112,13 +114,17 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 부품 배치는 다음과 같습니다:
 
-(연결 회로도 사진)
+<img src="https://github.com/user-attachments/assets/fe846f67-e28e-493c-8093-01bc09df8e64" width="400"/>
 
 <img src="https://github.com/user-attachments/assets/fde17e5d-96df-4e12-b131-bf441ab5554c" width="350"/>
 
 🔌 5V Power Supply
 
-Raspberry Pi에서 2개 이상의 서보모터를 동시 구동할 경우 shutdown이 발생하기에 5V 외부 전원 공급이 반드시 필요합니다. 
+Raspberry Pi에서 서보모터 2개 이상을 동시에 구동하면 전력 부족으로 shutdown 될 수 있으므로, 외부 5V 전원 공급이 필수입니다. 이를 위해 PCA9685 driver를 사용해 서보모터에 안정적으로 전원을 공급합니다. 
+
+전원 공급 방식은 상황에 맞게 선택 가능합니다:
+
++ 
 
 (연결 사진)
 
