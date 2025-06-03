@@ -56,7 +56,9 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/02] control.py 코드 수정: GPIO pin 번호 변경
 
-[25/06/03] 구조물 제작 완료 및 시스템 통합 진행
+[25/06/03] 구조물 문제점 해결 및 시스템 통합 진행
+
+{25/06/04] README 내용 추가: How To Run > Hardware Setup
 
 ## Key Features
 
@@ -106,7 +108,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 <img src="https://github.com/user-attachments/assets/0821dbdc-e17e-4df1-b87a-50daf8506f4d" width="250"/>
 
-#### 1) Setup
+#### 1) Hardware Setup
 
 실구조물은 2층 회전 구조로, 2층의 두 받침대는 SG-90 서보모터 2개와 각각 붙어 있고 이 두 서보모터는 MG996R 서보모터의 양 날개에 각각 부착되어 있습니다. 층층이 연결된 이 구조는 1층 분리통의 정중앙과 얇은 봉을 통해 연결되며 분류 결과에 따라 서보모터가 회전하며 낙하를 통해 쓰레기가 처리됩니다.  
 
@@ -114,22 +116,43 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 부품 배치는 다음과 같습니다:
 
-<img src="https://github.com/user-attachments/assets/fe846f67-e28e-493c-8093-01bc09df8e64" width="400"/>
+<img src="https://github.com/user-attachments/assets/fe846f67-e28e-493c-8093-01bc09df8e64" width="500"/>
 
-<img src="https://github.com/user-attachments/assets/fde17e5d-96df-4e12-b131-bf441ab5554c" width="350"/>
+<img src="https://github.com/user-attachments/assets/9f11cb5b-f2db-4b79-bf2c-a8b5d695d7c6" width="500"/>
+
++ 회로 배치 Checklist
+
+  ✔ PCA9685 배선 시, Embedded Control Logic과 일치하는 채널 번호로 연결
+  
+  ✔ BCM 번호로 GPIO 센서 연결 (초음파센서와 LED는 5V 출력 사용)
+  
+  ✔ 외부 전원 공급 방안 마련
+  
+  ✔ GND는 모두 Raspberry Pi의 GND와 공통 연결
++ 구조물 제작 Checklist
+  ✔ 받침대의 외회전 반경을 고려하여 적절한 크기 설정 (1층 분리통의 절반 정도)
+  
+  ✔ 받침대 크기에 맞춰 2층 가이드 벽 크기 설정
+  
+  ✔ 받침대와 가이드 벽 간의 빈 공간 보완 (하중 부담을 높이지 않는 재료로 사선의 받침틀 추가)
+  
+  ✔ 받침틀은 외회전 반경 고려하여 기울임 설정
+  
 
 🔌 5V Power Supply
 
-Raspberry Pi에서 서보모터 2개 이상을 동시에 구동하면 전력 부족으로 shutdown 될 수 있으므로, 외부 5V 전원 공급이 필수입니다. 이를 위해 PCA9685 driver를 사용해 서보모터에 안정적으로 전원을 공급합니다. 
+Raspberry Pi에서 서보모터 2개 이상을 동시에 구동하면 전력 부족으로 shutdown 될 수 있으므로, 외부 5V (최소 3A 필요) 전원 공급이 필수입니다. 이를 위해 PCA9685 driver를 사용해 서보모터에 안정적으로 전원을 공급합니다. PCA9685 screw 터미널(V+)에 전원 장치를 연결하여 공급할 수 있습니다. 
 
-전원 공급 방식은 상황에 맞게 선택 가능합니다:
+전원 공급 방식은 상황에 맞게 선택 가능합니다: 
 
-+ 
+| 방법 | 설명 | 권장 조건|
+|------|------|----------|
+|**Our Approach**:<br>5V 3A USB 어댑터 + USB 케이블 | USB 케이블을 잘라 피복을 벗긴 후 점퍼선(female)에 연결해 절연 테이프로 고정 | 저렴하고 간단<br>but 접촉 불안정 |
+| 5V 3A USB 어댑터<br>+ DC to USB 케이블<br>+ barrel to screw | screw와 screw끼리 전선 연결 | 안정성<br>but 가장 고비용 |
+| USB 보조배터리 | USB 케이블을 잘라 피복을 벗긴 후 점퍼선(female)에 연결해 절연 테이프로 고정 | 이동성<br>but 낮은 최대 전류 |
+| 리튬이온 배터리팩 | screw에 전선 연결 | 이동성<br>but 충전 및 보호회로 필요 |
+| 가변 정전압 모듈 | 원하는 전압 설정 | 미세 조절 가능<br>but 복잡 |
 
-(연결 사진)
-
-+ PCA9685 V+ 단자에 5V 어댑터 연결
-+ GND는 Raspberry Pi와 공통으로 연결
 
 #### 2) Requirements
 
@@ -149,7 +172,7 @@ python main.py
 
 | 이슈                        | 원인 및 해결 방안                                     |
 | ------------------------- | ---------------------------------------------- |
-| 서보모터가 멈추거나 라즈베리파이가 꺼짐 | PCA9685에 5V 안정 전원 공급 필수|
+| 서보모터가 멈추거나 라즈베리파이가 꺼짐 | PCA9685에 5V 안정 전원 공급 필수, GND 공통 연결 여부 확인|
 | 카메라 인식 안 됨             | 안정적인 작동을 위해 PiCamera 대신 USB 웹캠 사용 권장 |
 | 초음파 센서/LED 미작동       | GND 공통 연결 여부 확인, GPIO 핀 번호 확인|
 
@@ -260,4 +283,6 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 + 서보모터 하중 한계
 
 + 실구조물 구조적 문제
+
+🏳 Limitation
 
