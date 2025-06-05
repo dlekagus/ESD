@@ -4,60 +4,84 @@ from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 import busio
 
-# PCA9685: Control 2 SG-90 and 1 MG996R 
+# PCA9685: Control 2 SG-90 and 1 MG996R (360 ver.)
 TRAY_LEFT = 0
 TRAY_RIGHT = 1
 BIN = 2
 PCA_DUTY = 65535
 PCA_FREQ = 50
 
+PULSE_MAX = 2500
+PULSE_MIN = 500
+
 i2c = busio.I2C(SCL, SDA)
 pca = PCA9685(i2c)
 pca.frequency = PCA_FREQ
 
-current = "re"
-bin_pos = {"re":0, "can":1, "plastic":2, "paper":3}
-
 # angle -> duty cycle 
 def angle_to_duty(angle):
-    pulse = 1000 + (angle / 180) * 1000
-    duty = int((pulse / (1/PCA_FREQ)) * PCA_DUTY)
+    pulse = PULSE_MIN + (angle / 180.0) * (PULSE_MAX - PULSE_MIN)
+    duty = int(pulse * PCA_DUTY / (1000000 / PCA_FREQ))
     return duty
 
-# bin
-def rotate_bin(target):
-    global current
 
-    if target == current:
-        print(f"[BIN] {target} 방향 유지 중 → 회전 생략")
-        return
-    
-    current_idx = bin_pos[current]
-    target_idx = bin_pos[target]
+# bin: move to 'label'
+def rotate_bin(label):
+    angle_map = {   # suitable values found through testing
+        'can': 120,
+        'plastic': 210,
+        'paper': 45
+    }
 
-    if target != "paper":
-        target_angle = target_idx * 90
+    target_angle = angle_map[label]
+
+    # fixed rotation speed: 1 degree ~= 0.01 sec.
+    rotation_time = target_angle * 0.01
+
+    # rotation direction
+    if label == 'paper':
+        duty = 0.06  # clockwise (for shortest path)
     else:
-        target_angle = -90
-    print(f"[BIN] 현재 위치: {current} → 목표 위치: {target}, 회전 각도: {target_angle}°")
-    duty = angle_to_duty(abs(target_angle))
-    pca.channels[BIN].duty_cycle = duty
+        duty = 0.095 # counter-clockwise
 
-    time.sleep(1)
-    current = target
+    # rotate
+    pca.channels[BIN].duty_cycle = int(duty * 0xFFFF)
+    time.sleep(rotation_time)
+
+    # stop
+    pca.channels[BIN].duty_cycle = 0
+
+# bin: return to the origin (cuz bin always starts rotating at the origin(re-To be Sorted class))
+def return_bin(label):
+    return_angle_map = {    # suitable values found through testing
+        'can': 50,
+        'plastic': 82,
+        'paper': 100
+    }
+
+    # same angle but opposite direction
+    return_angle = return_angle_map[label]
+    return_rotation_time = return_angle * 0.01
+
+    duty = 0.095 if label == 'paper' else 0.06
+
+    pca.channels[BIN].duty_cycle = int(duty * 0xFFFF)
+    time.sleep(return_rotation_time)
+
+    pca.channels[BIN].duty_cycle = 0
 
 # tray
 def rotate_tray():
     duty_45deg = angle_to_duty(45)
-    duty_0deg = angle_to_duty(0)
+    duty_90deg = angle_to_duty(90)
+    duty_135deg =  angle_to_duty(135)
 
-    pca.channels[TRAY_LEFT].duty_cycle = duty_45deg
+    pca.channels[TRAY_LEFT].duty_cycle = duty_135deg
     pca.channels[TRAY_RIGHT].duty_cycle = duty_45deg
     time.sleep(1)
 
-    pca.channels[TRAY_LEFT].duty_cycle = duty_0deg
-    pca.channels[TRAY_RIGHT].duty_cycle = duty_0deg
-    time.sleep(0.3)
+    pca.channels[TRAY_LEFT].duty_cycle = duty_90deg
+    pca.channels[TRAY_RIGHT].duty_cycle = duty_90deg
 
 
 # GPIO: Control Ultrasonic and LED
