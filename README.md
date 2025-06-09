@@ -68,7 +68,8 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/09] Raspberry Pi fine-tuned YOLOv5n 추론 및 서보모터 로직 연결 확인, 로직 최적화 진행
 
-[25/06/10] main.py, detect.py 수정 및 logic 폴더 README 내용 추가: 각 .py 파일에 대한 로직 설명
+[25/06/10] main.py, detect.py, FSM 수정 및 logic 폴더 README 내용 추가: 각 .py 파일에 대한 로직 설명
+
 
 ## Key Features
 
