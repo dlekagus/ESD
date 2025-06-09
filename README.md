@@ -280,10 +280,15 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 
 | 항목                          | 설명                                          |
 | --------------------------- | ------------------------------------------- |
-|FPS| Raspberry Pi에서 실시간 추론 속도 측정 (10 이상된 거 캡처본) |
-| Precision / Recall      | YOLOv5n 분류 정확도 평가 (계산 값, curve, accuracy)          |
+|FPS (yolo vs system)| Raspberry Pi에서 실시간 추론 속도 측정 |
+| Precision / Recall (yolo vs system)   | 분류 및 서보모터 제어 정확도 평가 (계산 값, curve, accuracy) |
 | Confusion Matrix      | 클래스 간 오분류 양상 (시각화)                            |
 |System Stability        | 실사용 편의성, 낙하 안정성 |
+
+📉 Validation for fine-tuned YOLOv5n (on Colab)
+```bash
+!python val.py --weights /content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt --data /content/drive/MyDrive/ESD/dataset/data.yaml --img 160
+```
 
 💡 Encountered Difficulties & Solutions
 
