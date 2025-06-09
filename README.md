@@ -64,7 +64,11 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/05] MG996R 서보모터 로직 보완 및 최종 동작 확인
 
-[25/06/05] main.py, detect.py, control.py 수정 및 logic 폴더 README 내용 추가: 각 .py 파일에 대한 로직 설명 
+[25/06/05] main.py, detect.py, control.py 수정
+
+[25/06/09] Raspberry Pi fine-tuned YOLOv5n 추론 및 서보모터 로직 연결 확인, 로직 최적화 진행
+
+[25/06/10] main.py, detect.py 수정 및 logic 폴더 README 내용 추가: 각 .py 파일에 대한 로직 설명
 
 ## Key Features
 
@@ -106,9 +110,9 @@ MG996R의 경우 180과 360으로 두 가지 버전이 있으며 360도 회전�
 
 | Member   | Tasks                                                                                                                  |
 |----------|-------------------------------------------------------------------------------------------------------------------------|
-| 이담현   | - YOLOv5n 모델 fine-tuning<br>- 라즈베리파이 추론<br>- Embedded Control Logic 작성 및 테스트<br>- 회로 구성 및 전력 안정화 |
+| 이담현   | - YOLOv5n 모델 fine-tuning<br>- Raspberry Pi 추론<br>- Embedded Control Logic 작성 및 최적화<br>- 회로 구성 및 전력 안정화 |
 | 최현빈   | - 준비물 구성 및 확보<br>- 서보모터 하중 테스트 및 위치 보완<br>- 구조물 문제점 해결 |
-| 공동     | - 구조물 제작<br>- 하드웨어 배치 최적화<br>- 전체 동작 통합 테스트 및 최적화<br>- 자료 제작|
+| 공동     | - 구조물 제작<br>- 하드웨어 배치 최적화<br>- 전체 동작 통합 테스트<br>- 자료 제작|
 
 ## 1. How To Run
 
@@ -293,6 +297,8 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 + 실구조물 구조적 문제
 
 + 서보모터 360도 회전 동작 로직 구성
+
++ USB 웹캠 warmup 속도
 
 🏳 Limitation
 
