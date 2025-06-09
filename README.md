@@ -1,6 +1,7 @@
 <div align="center">
  
 #  🥤음료 용기 분리수거 쓰레기통 🚮
+### (Automated Beverage Container Sorting System)
 (demo 이미지 or gif 첨부)
 
 대학교 캠퍼스 내 음료 용기 분리수거 환경 개선을 목표로,
