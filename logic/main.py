@@ -1,4 +1,4 @@
-from detect import run
+from detect import load_model, run
 from control import (
     rotate_bin,
     return_bin,
@@ -9,6 +9,7 @@ from control import (
 )
 import cv2
 import time
+import os
 
 # Define states
 STATE_IDLE = "IDLE"
@@ -20,64 +21,93 @@ STATE_LED = "LED"
 FULL_THRES = 4
 INFERENCE_INTERVAL = 3
 
+WINDOW = True # to improve fps
+
 # initialization
 state = STATE_IDLE
 drop = {'re': 0, 'can': 0, 'plastic': 0, 'paper': 0}
 detected_label = "unknown"
-frame_cnt = 0
-sys_frame_cnt = 0
-last_res = ("unknown", None, 0.0, 0.00)
-last_yolo_fps = 0.0
 full = set()
+fps_list=[]
+trash_cnt = 0
 
-# system FPS
-sys_start = time.time()
-yolo_total_time = 0.0
-yolo_infer_cnt = 0
+# warmup camera
+print("[CAM] 카메라 워밍업 중...")
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 160)
+while True:
+    test_ret, test_frame = cap.read()
+    if test_ret:
+        print("[READY] 카메라 준비 완료")
+        break
+    time.sleep(0.1)
+input("Enter를 누르면 동작을 시작합니다.\n")
+
+model, imgsz, device = load_model(weights="best.pt", imgsz=(160, 160), device="")
 
 try:
-    while True:
-        frame_cnt += 1
+    while trash_cnt < 3:    # just for demo (real: infinite loop)
+        # system FPS
+        sys_frame_cnt = 0
+        sys_start = time.time()
         sys_frame_cnt += 1
-
-        # demo: Real-time streaming just for checking(not required for actual commercialization) 
-        _, frame, _, _ = last_res
-        if frame is not None:
-            cv2.imshow("Webcam", frame)
-            if cv2.waitKey(1) == ord("q"):
-                break
-        
+     
         # Control FSM
         if state == STATE_IDLE:
-            if frame_cnt % INFERENCE_INTERVAL == 0:
-                state = STATE_CLASS
+            trash_cnt += 1
+            state = STATE_CLASS
 
         elif state == STATE_CLASS:
-            yolo_start = time.time()
-            label, frame, yolo_fps, conf = run(
-                weights = "best.pt",
-                imgsz = (160, 160),
-                source = 0,
-                return_res = True
-            )
-            yolo_end = time.time()
-            yolo_infer_cnt += 1
-            yolo_total_time += (yolo_end - yolo_start)
+            frames = []
+            start_time = time.time()
+            print("[STATE] 3초간 프레임 수집 중...")
 
-            last_res = (label, frame, yolo_fps, conf)
-            last_yolo_fps = yolo_fps
+            while (time.time() - start_time) < 3.0:
+                ret, frame = cap.read()
+                if ret:
+                    frames.append(frame)
+                    if WINDOW:
+                        cv2.imshow("Live Capture", frame)
+                        if cv2.waitKey(1) == ord("q"):
+                            break
+            cap.release()
 
-            if not label or label == "unknown":
+            # inference per every 3 frames
+            results = []
+            fps_list.clear()
+            for idx, frame in enumerate(frames):
+                if idx % INFERENCE_INTERVAL != 0:
+                    continue
+
+                yolo_start = time.time()
+                label, out_frame, conf = run(model, frame, imgsz=imgsz, return_res=True)
+                yolo_end = time.time()
+
+                fps_list.append(1/ (yolo_end - yolo_start))
+
+                if label and label != "unknown" and conf is not None:
+                    results.append((label, conf, out_frame))
+
+            if not results:
                 print("[CLASS] 감지 실패")
                 state = STATE_IDLE
-            else: 
-                if label in full:
-                    print(f"[FULL] {label} 통이 이미 가득 찼습니다.")
+            else:
+                top_result = max(results, key=lambda x: x[1])  # choose max confidence 
+                detected_label, top_conf, top_frame = top_result
+
+                cv2.imwrite("result.jpg", top_frame)
+                os.system("xdg-open result.jpg")
+
+                avg_yolo_fps = sum(fps_list) / len(fps_list) if fps_list else 0
+                print(f"[yolo FPS] {avg_yolo_fps: .1f}")
+
+                if detected_label in full:
+                    print(f"[FULL] {detected_label} 통이 이미 가득 찼습니다.")
                     state = STATE_LED
-                else: 
-                    print(f"[detected] {label} ({conf: .2f})")
-                    drop[label] += 1
-                    detected_label = label
+                else:
+                    print(f"[detected] {detected_label} ({top_conf:.2f})")
+                    drop[detected_label] += 1
                     state = STATE_SERVO
 
         elif state == STATE_SERVO:
@@ -87,6 +117,8 @@ try:
                 rotate_tray()
                 time.sleep(1)
                 return_bin(detected_label)
+            else:
+                rotate_tray()
 
             if drop[detected_label] >= FULL_THRES:
                 state = STATE_FULL
@@ -105,17 +137,13 @@ try:
         elif state == STATE_LED:
             notification()
             state = STATE_IDLE
-            
+        
+        total_sys_time = time.time() - sys_start
+        sys_fps = sys_frame_cnt / total_sys_time if total_sys_time > 0 else 0
+        print(f"[System FPS] {sys_fps: .1f}")
 except KeyboardInterrupt:
     pass
 finally:
-    total_sys_time = time.time() - sys_start
-    sys_fps = sys_frame_cnt / total_sys_time if total_sys_time > 0 else 0
-    avg_yolo_fps = yolo_infer_cnt / yolo_total_time if yolo_total_time > 0 else 0
-    
-    print(f"[YOLO average FPS] {avg_yolo_fps: .1f}, [System FPS] {sys_fps: .1f}")
     cv2.destroyAllWindows()
     cleanup()
-
-
 
