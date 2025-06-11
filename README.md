@@ -25,7 +25,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 ## Deployment
 
-(배포 링크 첨부 or 별도 폴더 추가, 파일 tree 추가)
+(준비중)
 
 ## Commit History
 
@@ -129,7 +129,7 @@ MG996R의 경우 180과 360으로 두 가지 버전이 있으며 360도 회전�
 
 부품 배치는 다음과 같습니다:
 
-<img src="https://github.com/user-attachments/assets/fe846f67-e28e-493c-8093-01bc09df8e64" width="500"/>
+<img src="https://github.com/user-attachments/assets/2c67f09d-dbe7-4c28-b82b-e5c3bc9cad52" width="500"/>
 
 <img src="https://github.com/user-attachments/assets/9f11cb5b-f2db-4b79-bf2c-a8b5d695d7c6" width="500"/>
 
@@ -137,17 +137,12 @@ MG996R의 경우 180과 360으로 두 가지 버전이 있으며 360도 회전�
 
   ✔ PCA9685 배선 시, Embedded Control Logic과 일치하는 채널 번호로 연결
   
-  ✔ BCM 번호로 GPIO 센서 연결 (초음파센서와 LED는 5V 출력 사용)
-  
   ✔ 외부 전원 공급 방안 마련
   
-  ✔ GND는 모두 Raspberry Pi의 GND와 공통 연결
 + 구조물 제작 Checklist
   ✔ 받침대의 외회전 반경을 고려하여 적절한 크기 설정 (1층 분리통의 절반 정도)
   
-  ✔ 받침대 크기에 맞춰 2층 가이드 벽 크기 설정
-  
-  ✔ 받침대와 가이드 벽 간의 빈 공간 보완 (하중 부담을 높이지 않는 재료로 사선의 받침틀 추가)
+  ✔ 받침대 크기에 맞춰 가이드 벽 크기 설정
   
   ✔ 받침틀은 외회전 반경 고려하여 기울임 설정
   
@@ -292,8 +287,6 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 
 💡 Encountered Difficulties & Solutions
 
-(개선 후 사진과 함께 solution 추가)
-
 + 모델 인식 오류
 
 + 서보모터 전력 부족
@@ -307,4 +300,9 @@ files.download('/content/drive/MyDrive/yolov5_runs/4cls_328img/weights/best.pt')
 + USB 웹캠 warmup 속도
 
 🏳 Limitation
+
++ 받침대 크기보다 큰 쓰레기
++ can 정확도
++ 한 실행마다 한 분류만 가능 (받침대 하중으로 인해 2번 이상 연속은 무리)
++ re class 인지 오류: 더 정확도 높은 모델 써서 시각적으로 덜 구분가는 클래스 시도
 
