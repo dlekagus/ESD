@@ -16,7 +16,7 @@ def load_model(weights='best.pt', imgsz=(160, 160), device=''):
     return model, imgsz, device
 
 
-def run(model, frame, imgsz=(160, 160), conf_thres=0.35, iou_thres=0.45, classes=None, return_res=False):
+def run(model, frame, imgsz=(160, 160), conf_thres=0.3, iou_thres=0.45, classes=None, return_res=False):
     names = model.names
     device = model.device
     stride = model.stride
@@ -46,7 +46,7 @@ def run(model, frame, imgsz=(160, 160), conf_thres=0.35, iou_thres=0.45, classes
     if not detected_class:
         return "unknown", im0, 0.0
 
-    is_re = len(set(detected_class)) > 1 or 're' in detected_class
+    is_re = 're' in detected_class
     top_label = 're' if is_re else detected_class[0]
 
     if return_res and all_detections:
@@ -64,3 +64,6 @@ def run(model, frame, imgsz=(160, 160), conf_thres=0.35, iou_thres=0.45, classes
             top_conf = max([c[1] for c in all_detections])
             im0 = annotator.result()
             return top_label, im0, top_conf
+
+
+
