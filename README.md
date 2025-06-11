@@ -2,13 +2,13 @@
  
 #  🥤음료 용기 분리수거 쓰레기통 🚮
 ### (Automated Beverage Container Recycling Bin)
-(demo 이미지 or gif 첨부)
+<img src="https://github.com/user-attachments/assets/2b578963-eb97-4af9-bdf0-17183a528206"  width="300"/>
 
 대학교 캠퍼스 내 음료 용기 분리수거 환경 개선을 목표로,
 
 Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하고,
 
-여러 센서와 액추에이터를 장착한 실구조물을 제어하여 자동 분리수거를 수행하는 시스템
+여러 액추에이터를 장착한 실구조물을 제어하여 자동 분리수거를 수행하는 시스템
 </div>
 
 ## Content
@@ -71,12 +71,13 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 [25/06/10] main.py, detect.py, FSM 수정 및 logic 폴더 README 내용 추가: 각 .py 파일에 대한 로직 설명
 
+[25/06/11] 최종본 업로드
+
 
 ## Key Features
 
 + fine-tuned YOLOv5n 기반 실시간 쓰레기 분류
 + PCA9685 기반 서보모터 3개 제어
-+ GPIO 기반 초음파센서 및 LED 제어
 + FSM을 통해 Raspberry Pi에서의 전체 동작 흐름 관리
 
 ## Technologies Used 
@@ -101,14 +102,12 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 
 MG996R의 경우 180과 360으로 두 가지 버전이 있으며 360도 회전을 위해서는 반드시 360 버전이 있어야 합니다. 
 
-| 카메라 | 서보모터<br>(MG996R-360 ver.) | 서보모터<br>(SG-90) | 초음파센서<br>(HC-SR04) | LED | PCA9685 Driver | 전원공급 장치 |
+| 카메라 | 서보모터<br>(MG996R-360 ver.) | 서보모터<br>(SG-90) | PCA9685 Driver | 전원공급 장치 |
 |:------:|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
-| <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="200"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="200"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="200"/> | <img src="https://github.com/user-attachments/assets/1789c1e5-4773-4f63-998d-b287c9d67a5a" width="200"/> | <img src="https://github.com/user-attachments/assets/c1274c5f-55c1-423f-a773-0f0524bffcc0" width="200"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="200"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="200"/> 
-| 쓰레기<br>실시간 인식 | 중앙 회전축 기준<br>받침대 위치 변경 (양날개) | 두 받침대<br>외회전 (단날개) | 분리통 꽉참<br>여부 확인 | 분리통 꽉참 상태 경고 표시 | 서보모터 3개 구동 | 외부 전원 공급 |
+| <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="200"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="200"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="200"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="200"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="200"/> 
+| 쓰레기<br>실시간 인식 | 중앙 회전축 기준<br>받침대 위치 변경 (양날개) | 두 받침대<br>외회전 (단날개) | 서보모터 3개 구동 | 외부 전원 공급 |
 
 ## Tasks & Responsibilities
-
-(개인 그림 추가)
 
 | Member   | Tasks                                                                                                                  |
 |----------|-------------------------------------------------------------------------------------------------------------------------|
