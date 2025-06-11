@@ -1,5 +1,4 @@
 import time
-import RPi.GPIO as GPIO
 from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 import busio
@@ -84,41 +83,7 @@ def rotate_tray():
     pca.channels[TRAY_RIGHT].duty_cycle = duty_90deg
 
 
-# GPIO: Control Ultrasonic and LED
-ULTRA_TRIG = 17
-ULTRA_ECHO = 27
-LED = 4
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(ULTRA_TRIG, GPIO.OUT)
-GPIO.setup(ULTRA_ECHO, GPIO.IN)
-GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
 
-# Ultrasonic sensor
-def check_full():
-    GPIO.output(ULTRA_TRIG, True)
-    time.sleep(0.00001)
-    GPIO.output(ULTRA_TRIG, False)
 
-    while GPIO.input(ULTRA_ECHO) == 0:
-        pulse_start = time.time()
-    while GPIO.input(ULTRA_ECHO) == 1:
-        pulse_end = time.time()
-
-    distance = (pulse_end - pulse_start) * (340*100) / 2
-    distance = round(distance, 2)
-
-    print(f"[ULTRA] 측정 거리: {distance}cm → {'FULL' if distance < 10 else 'OK'}")
-    return (distance < 10)
-
-# LED
-def notification():
-    GPIO.output(LED, True)
-    time.sleep(2)
-    GPIO.output(LED, False)
-
-# cleanup
-def cleanup():
-    print("[CLEANUP] GPIO 정리 및 종료")
-    GPIO.cleanup()
 
