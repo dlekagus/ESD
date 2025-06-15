@@ -103,7 +103,7 @@ Raspberry Pi 기반의 YOLOv5n 모델을 활용해 쓰레기 종류를 인식하
 MG996R의 경우 180과 360으로 두 가지 버전이 있으며 360도 회전을 위해서는 반드시 360 버전이 있어야 합니다. 
 
 | 카메라 | 서보모터<br>(MG996R-360 ver.) | 서보모터<br>(SG-90) | PCA9685 Driver | 전원공급 장치 |
-|:------:|:-----------------:|:---------------:|:----------:|:---:|:--------------:|:-------------:|
+|:------:|:-----------------:|:---------------:|:----------:|:---:|
 | <img src="https://github.com/user-attachments/assets/6c0492f8-ac86-4322-a9e0-25cef9a381c0" width="200"/> | <img src="https://github.com/user-attachments/assets/e7cf65cf-3438-4a57-b9ed-a7c6066803f8" width="200"/> | <img src="https://github.com/user-attachments/assets/2f0ddf28-8226-4bd3-a1ec-503e4cea0219" width="200"/> | <img src="https://github.com/user-attachments/assets/8c282cc2-3795-4eea-b862-2c561e002e9e" width="200"/> | <img src="https://github.com/user-attachments/assets/445fee6c-6855-4cd7-b330-2357d3549239" width="200"/> 
 | 쓰레기<br>실시간 인식 | 중앙 회전축 기준<br>받침대 위치 변경 (양날개) | 두 받침대<br>외회전 (단날개) | 서보모터 3개 구동 | 외부 전원 공급 |
 
